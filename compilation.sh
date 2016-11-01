@@ -39,3 +39,17 @@ wget https://www.dropbox.com/s/sl919ly0q79m1e6/gcc-4.7-linaro-rpi-gnueabihf.tbz
 tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
 
 #	add fixQualifiedPath with parameters later
+
+#	./configure \
+#  -release \
+#  -opengl es2 \
+#  -optimized-qmake \
+#  -no-pch \
+#  -make libs \
+#  -make tools \
+#  -reduce-relocations \
+#  -reduce-exports \
+#  -sysroot "$MNT_DIR" \
+#  -device linux-rasp-pi-g++ \
+# -device-option CROSS_COMPILE="$XCOMP_DIR"/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
+# -prefix /usr/local/Qt-5.0.2-raspberry
