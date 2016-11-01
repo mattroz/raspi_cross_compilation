@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #####################################
-#									#
-#	X-COMPILATION FOR RASPBERRY		#
-#									#
+#                                   #
+#   X-COMPILATION FOR RASPBERRY     #
+#                                   #
 #####################################
 
 
