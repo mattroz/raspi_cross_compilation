@@ -32,6 +32,10 @@ cd qt5
 #	init all submodules, repositories, etc
 ./init-repository
 
-#	get toolchain for cross-compilation
+#	get toolchain for cross-compilation and unzip it
 echo -e "\nTOOLCHAIN DOWNLOADING\n"
+cd $XCOMP_DIR
 wget https://www.dropbox.com/s/sl919ly0q79m1e6/gcc-4.7-linaro-rpi-gnueabihf.tbz
+tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
+
+#	add fixQualifiedPath with parameters later
