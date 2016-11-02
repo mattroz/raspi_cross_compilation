@@ -38,7 +38,11 @@ cd $XCOMP_DIR
 wget https://www.dropbox.com/s/sl919ly0q79m1e6/gcc-4.7-linaro-rpi-gnueabihf.tbz
 tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
 
-#	add fixQualifiedPath with parameters later
+#	add git installation and cross compilation tools cloning
+sudo apt-get install git
+git clone https://github.com/darius-kim/cross-compile-tools.git
+cd cross-compile-tools
+./fixQualifiedLibraryPaths "$MNT_DIR"
 
 #	./configure \
 #  -release \
