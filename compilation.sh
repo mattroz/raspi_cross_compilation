@@ -15,7 +15,7 @@ RASP_IMG_OFFSET="$((512*$(sudo fdisk -l $XCOMP_DIR/$RASPBIAN_IMG_NAME | tail -n1
 
 #	First step: make directory @ home
 echo -e "\nCREATING DIRECTORY $XCOMP_DIR"
-mkdir $(XCOMP_DIR)
+mkdir $XCOMP_DIR
 #echo $XCOMP_DIR
 
 #echo "$RASP_IMG_OFFSET"
@@ -42,18 +42,20 @@ tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
 sudo apt-get install git
 git clone https://github.com/darius-kim/cross-compile-tools.git
 cd cross-compile-tools
-./fixQualifiedLibraryPaths "$MNT_DIR"
+./fixQualifiedLibraryPaths $MNT_DIR
 
-#	./configure \
-#  -release \
-#  -opengl es2 \
-#  -optimized-qmake \
-#  -no-pch \
-#  -make libs \
-#  -make tools \
-#  -reduce-relocations \
-#  -reduce-exports \
-#  -sysroot "$MNT_DIR" \
-#  -device linux-rasp-pi-g++ \
-# -device-option CROSS_COMPILE="$XCOMP_DIR"/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
-# -prefix /usr/local/Qt-5.0.2-raspberry
+#	configure Qt libs and tools for building
+cd $XCOMP_DIR/qt5/qtbase
+	./configure \
+  -release \
+  -opengl es2 \
+  -optimized-qmake \
+  -no-pch \
+  -make libs \
+  -make tools \
+  #-reduce-relocations \
+  -reduce-exports \
+  -sysroot "$MNT_DIR" \
+  -device linux-rasp-pi-g++ \
+ -device-option CROSS_COMPILE="$XCOMP_DIR"/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
+ -prefix /usr/local/Qt-5.0.2-raspberry
