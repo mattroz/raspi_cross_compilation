@@ -54,6 +54,7 @@ tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
 sudo apt-get install git
 git clone https://github.com/darius-kim/cross-compile-tools.git
 cd cross-compile-tools
+sudo chmod a+x fixQualifiedLibraryPaths
 ./fixQualifiedLibraryPaths $MNT_DIR
 
 #sudo umount $MNT_DIR 
@@ -64,6 +65,23 @@ cd cross-compile-tools
 #   configure Qt libs and tools for building  #
 ###############################################
 cd $XCOMP_DIR/qt5/qtbase
+./configure 
+    -opengl es2 
+    -device linux-rasp-pi-g++ 
+    -device-option CROSS_COMPILE=$XCOMP_DIR/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- 
+    -sysroot /mnt/rasp-pi-rootfs 
+    -opensource 
+    -confirm-license 
+    -optimized-qmake 
+    -reduce-exports 
+    -release 
+    -make libs 
+    -make tools
+    -prefix /usr/local/qt5pi
+    -hostprefix /usr/local/qt5pi
+
+#	the second configuration variant
+:`
 ./configure \
   -release \
   -opengl es2 \
@@ -77,4 +95,4 @@ cd $XCOMP_DIR/qt5/qtbase
   -device linux-rasp-pi-g++ \
  -device-option CROSS_COMPILE=$XCOMP_DIR/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
  -prefix /usr/local/Qt-5.0.2-raspberry
-
+`
