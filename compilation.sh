@@ -107,3 +107,12 @@ cd $XCOMP_DIR/qt5/qtbase
  -device-option CROSS_COMPILE=$XCOMP_DIR/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
  -prefix /usr/local/Qt-5.0.2-raspberry
 `
+
+############################################
+#          make and install Qt             #
+############################################
+make -j$(nproc --all)
+sudo make install
+
+
+
