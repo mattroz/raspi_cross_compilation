@@ -10,7 +10,7 @@ XCOMP_DIR=~/raspi_cross
 MNT_DIR=/mnt/rasp-pi-rootfs/
 RASPBIAN_IMG_NAME=2016-09-23-raspbian-jessie.img
 #echo $RASPBIAN_IMG_NAME
-RASP_IMG_OFFSET="$((512*$(sudo fdisk -l $(pwd)/$RASPBIAN_IMG_NAME | tail -n1 | grep -E -o '\s{1,}[0-9]*' | head -n1)))"
+RASP_IMG_OFFSET="$((512*$(sudo fdisk -l $(pwd)/images/$RASPBIAN_IMG_NAME | tail -n1 | grep -E -o '\s{1,}[0-9]*' | head -n1)))"
 
 
 #	First step: make directory @ home
@@ -21,13 +21,14 @@ mkdir $XCOMP_DIR
 #   mount image to mount directory   #
 ######################################
 echo -e "\nCOPYING RASPBERRY IMAGE TO $XCOMP_DIR\n"
-cp $(pwd)/$RASPBIAN_IMG_NAME $XCOMP_DIR
+cp $(pwd)/images/$RASPBIAN_IMG_NAME $XCOMP_DIR
 echo -e "\nMOUNTING RASPBERRY IMAGE AT $MNT_DIR\n"
 cd $XCOMP_DIR
 sudo mount -o loop,offset="$RASP_IMG_OFFSET" "$RASPBIAN_IMG_NAME" "$MNT_DIR"
 
-exit 1					#for debugging
+sudo umount $MNT_DIR 
 rm -rf $XCOMP_DIR
+exit 1					#for debugging
 
 #####################################################
 #   clone Qt5 sources and go to created directory   #
