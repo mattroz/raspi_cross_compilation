@@ -23,7 +23,7 @@ echo -e "\nDOWNLOADING RASPBERRY IMAGE TO $XCOMP_DIR\n"
 #wget http://director.downloads.raspberrypi.org/raspbian/images/raspbian-2016-09-28/2016-09-23-raspbian-jessie.zip
 
 echo -e "\nUNZIPPING RASPBERRY IMAGE TO $XCOMP_DIR\n"
-unzip "${RASPBIAN_IMG_NAME::-4}.zip"
+unzip -jq "${RASPBIAN_IMG_NAME::-4}.zip"
 
 #	calculate offset for mounting
 RASP_IMG_OFFSET="$((512*$(sudo fdisk -l $XCOMP_DIR/$RASPBIAN_IMG_NAME | tail -n1 | grep -E -o '\s{1,}[0-9]*' | head -n1)))"
