@@ -2,7 +2,7 @@
 
 #####################################
 #                                   #
-#   X-COMPILATION FOR RASPBERRY     #
+#  CROSS-COMPILATION FOR RASPBERRY  #
 #                                   #
 #####################################
 
@@ -26,19 +26,17 @@ echo -e "\nMOUNTING RASPBERRY IMAGE AT $MNT_DIR\n"
 cd $XCOMP_DIR
 sudo mount -o loop,offset="$RASP_IMG_OFFSET" "$RASPBIAN_IMG_NAME" "$MNT_DIR"
 
-sudo umount $MNT_DIR 
-rm -rf $XCOMP_DIR
-exit 1					#for debugging
-
 #####################################################
 #   clone Qt5 sources and go to created directory   #
 #####################################################
+echo -e "\nCLONING QT5 TO $XCOMP_DIR\n"
 git clone git://code.qt.io/qt/qt5.git
 cd qt5
 
 ##############################################
 #   init all submodules, repositories, etc   #
 ##############################################
+echo -e "\nINITIALIZING QT DIRECTORY\n"
 ./init-repository
 
 #######################################################
@@ -58,11 +56,15 @@ git clone https://github.com/darius-kim/cross-compile-tools.git
 cd cross-compile-tools
 ./fixQualifiedLibraryPaths $MNT_DIR
 
+#sudo umount $MNT_DIR 
+#rm -rf $XCOMP_DIR
+#exit 1					#for debugging
+
 ###############################################
 #   configure Qt libs and tools for building  #
 ###############################################
 cd $XCOMP_DIR/qt5/qtbase
-	./configure \
+./configure \
   -release \
   -opengl es2 \
   -optimized-qmake \
@@ -71,8 +73,8 @@ cd $XCOMP_DIR/qt5/qtbase
   -make tools \
   #-reduce-relocations \
   -reduce-exports \
-  -sysroot "$MNT_DIR" \
+  -sysroot $MNT_DIR \
   -device linux-rasp-pi-g++ \
- -device-option CROSS_COMPILE="$XCOMP_DIR"/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
+ -device-option CROSS_COMPILE=$XCOMP_DIR/gcc-4.7-linaro-rpi-gnueabihf/bin/arm-linux-gnueabihf- \ 
  -prefix /usr/local/Qt-5.0.2-raspberry
 
