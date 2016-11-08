@@ -2,7 +2,7 @@
 
 #	check arguments number
 if [ "$#" -ne 1 ]; then
-    echo "error: missing path to module (./modprobe path/to/module)"
+	echo "error: missing path to module (./modprobe path/to/module)"
 	exit 1
 fi
 
