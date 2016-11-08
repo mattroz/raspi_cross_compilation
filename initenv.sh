@@ -20,7 +20,7 @@ mkdir $XCOMP_DIR
 ######################################
 cd $XCOMP_DIR
 echo -e "\nDOWNLOADING RASPBERRY IMAGE TO $XCOMP_DIR\n"
-#wget http://director.downloads.raspberrypi.org/raspbian/images/raspbian-2016-09-28/2016-09-23-raspbian-jessie.zip
+wget http://director.downloads.raspberrypi.org/raspbian/images/raspbian-2016-09-28/2016-09-23-raspbian-jessie.zip
 
 echo -e "\nUNZIPPING RASPBERRY IMAGE TO $XCOMP_DIR\n"
 unzip -jq "${RASPBIAN_IMG_NAME::-4}.zip"
@@ -30,7 +30,7 @@ RASP_IMG_OFFSET="$((512*$(sudo fdisk -l $XCOMP_DIR/$RASPBIAN_IMG_NAME | tail -n1
 
 echo -e "\nMOUNTING RASPBERRY IMAGE AT $MNT_DIR\n"
 sudo mkdir $MNT_DIR
-sudo mount -o loop,offset="$RASP_IMG_OFFSET" "$RASPBIAN_IMG_NAME" "$MNT_DIR"
+sudo mount -o loop,offset=$RASP_IMG_OFFSET $XCOMP_DIR/$RASPBIAN_IMG_NAME $MNT_DIR
 
 sudo umount $MNT_DIR 
 rm -rf $XCOMP_DIR
@@ -40,6 +40,7 @@ exit 1					#for debugging
 #####################################################
 #   clone Qt5 sources and go to created directory   #
 #####################################################
+cd $XCOMP_DIR
 echo -e "\nCLONING QT5 TO $XCOMP_DIR\n"
 git clone git://code.qt.io/qt/qt5.git
 cd qt5
@@ -60,11 +61,12 @@ echo -e "\nTOOLCHAIN UNZIPPING\n"
 tar xfj gcc-4.7-linaro-rpi-gnueabihf.tbz
 
 ###############################################################
-#   add git installation and cross compilation tools cloning  #
+#   git installation and cross compilation tools cloning      #
 ###############################################################
 sudo apt-get install git
+cd $XCOMP_DIR
 git clone https://github.com/darius-kim/cross-compile-tools.git
-cd cross-compile-tools
+cd $XCOMP_DIR/cross-compile-tools
 sudo chmod a+x fixQualifiedLibraryPaths
 ./fixQualifiedLibraryPaths $MNT_DIR
 
